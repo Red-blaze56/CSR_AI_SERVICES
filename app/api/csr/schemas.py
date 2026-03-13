@@ -3,11 +3,13 @@ from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
 
 class Action(str, Enum):
-    collect_budget = "collect_budget"
-    collect_cause  = "collect_cause"
-    collect_region = "collect_region"
+    budget = "collect_budget"
+    cause = "collect_cause"
+    region = "collect_region"
+    timeline = "timeline"
+    employee_engagement = "employee_engagement"
     generate_ideas = "generate_ideas"
-    complete       = "complete"
+    complete = "complete"
 
 class UserProfile(BaseModel):
     company_id: int
@@ -17,8 +19,8 @@ class UserProfile(BaseModel):
 
 class CSRContext(BaseModel):
     conversation_history: List[Dict[str, Any]] = Field(default_factory=list)
-    current_step: str
-    preferences_collected: Dict[str, Any] = Field(default_factory=list)
+    current_step: str = Field(default="welcome")
+    preferences_collected: Dict[str, Any] = Field(default_factory=dict)
     user_profile: UserProfile
 
 class CSRAgentRequest(BaseModel):
@@ -60,6 +62,8 @@ interface CSRAgentResponse {
     | 'collect_cause'
     | 'collect_region'
     | 'generate_ideas'
+    | 'timeline'
+    | 'employee_engagement'
     | 'complete';
 
   extracted_data?: Record<string, any>;
