@@ -88,9 +88,6 @@ Return ONLY this JSON:
     {{
       "title": "string",
       "description": "2-3 sentences about the approach and goal of this campaign",
-      "cause_category": "e.g. Women Empowerment",
-      "scheduleVII": "e.g. Education",
-      "schedule_vii_category": "e.g. ii",
       "budgetBreakdown": {{
         "infrastructure": 50000,
         "training": 40000,
@@ -98,6 +95,7 @@ Return ONLY this JSON:
         "monitoring": 15000,
         "contingency": 10000
       }},
+      "scheduleVII": "e.g. Education",
       "sdgAlignment": [4, 8],
       "impactMetrics": {{
         "beneficiaries": 100,

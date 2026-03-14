@@ -4,7 +4,7 @@ STEP_FLOW = {
     "cause":"region",
     "region":"timeline",
     "timeline":"employee_engagement",
-    "employee_engagement":"generating_ideas",
+    "employee_engagement":"complete",
 }
 
 SUGGESTIONS = {

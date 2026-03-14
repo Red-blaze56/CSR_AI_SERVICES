@@ -1,5 +1,6 @@
 from app.api.csr.schemas import CSRAgentRequest, CSRAgentResponse, Action
-from app.ai.service import generate_campaigns, extract_preferences
+from app.api.csr.csr_service import extract_preferences
+from app.api.campaigns.campaigns_service import generate_campaigns
 from app.agents.csr_agent.converstaion_flow import STEP_FLOW, PROMPTS, SUGGESTIONS
 
 STEP_TO_ACTION = {
@@ -19,7 +20,6 @@ async def process_csr_chat(request: CSRAgentRequest) -> CSRAgentResponse:
     current_step = context.current_step
     preferences = dict(context.preferences_collected or {})
 
-    # Welcome
     if current_step == "welcome":
         return CSRAgentResponse(
             response_text=PROMPTS["budget"],
@@ -50,7 +50,8 @@ async def process_csr_chat(request: CSRAgentRequest) -> CSRAgentResponse:
             confidence=0.6
         )
     
-    preferences.update({current_step: extracted.get("extracted_value")})
+    # this stores all the extracted data w.r.t the steps in the preferences dictionary
+    preferences.update({current_step: extracted.get("extracted_value")}) 
 
     # Determine next step
     next_step = STEP_FLOW.get(current_step)
@@ -64,16 +65,14 @@ async def process_csr_chat(request: CSRAgentRequest) -> CSRAgentResponse:
             confidence=0.3
         )
 
+
     # Generate campaigns
-    if next_step == "generating_ideas":
-
-        campaigns = await generate_campaigns(preferences)
-
+    if next_step == "complete":
         return CSRAgentResponse(
-            response_text="Here are 3 CSR campaign ideas based on your preferences.",
-            next_step="project_selection",
-            action=Action.generate_ideas,
-            extracted_data={"campaigns": campaigns},
+            response_text="Great! I have collected all your CSR preferences.",
+            next_step="complete",
+            action=Action.complete,
+            extracted_data=preferences,
             confidence=1.0
         )
 
