@@ -1,8 +1,8 @@
 from app.modules.check_ngo_service.schema import CheckNGOServicesRequest, CheckNGOServicesResponse
-from app.shared.embeddings.sentence_transformer import embed_text
+from app.shared.embeddings.embedding import embed_text
 from app.shared.embeddings.query_maker import make_query
 from app.shared.clients.supabase_client import supabase
-from src.config.settings import CONFIG 
+from app.core.config import CONFIG 
 
 class NGOServiceChecker:
     def __init__(self):

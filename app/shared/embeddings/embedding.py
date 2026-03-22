@@ -1,4 +1,4 @@
-from sentence_transformer import SentenceTransformer
+from sentence_transformers import SentenceTransformer
 
 def embed_text(text: str)-> list[float]:
     model = SentenceTransformer('all-MiniLM-L6-v2')

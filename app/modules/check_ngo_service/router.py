@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from app.modules.check_ngo_service.schema import CheckNGOServicesRequest, CheckNGOServicesResponse
-from services import NGOServiceChecker
+from app.modules.check_ngo_service.services import NGOServiceChecker
 
 checker = NGOServiceChecker()
 
