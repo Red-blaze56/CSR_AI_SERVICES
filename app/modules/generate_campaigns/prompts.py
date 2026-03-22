@@ -102,7 +102,8 @@ OUTPUT FORMAT
       "scheduleVII": "one of the categories",
 
       "sdgAlignment": [1, 4],
-
+      "start_date": "{timeline_start}",
+      "end_date": "{timeline_end}",
       "impactMetrics": {{
         "beneficiaries": 0,
         "duration": "{timeline_start} to {timeline_end}"
