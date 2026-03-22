@@ -1,15 +1,10 @@
-from unittest import result
-
 from app.shared.clients.supabase_client import supabase
 
 class SelectedCampaignsService:
     def __init__(self):
         pass
 
-    def get_selected_campaigns(self, ngo_id: str):
-        pass
-
-    def store_selected_campaign(self,campaign: dict, company_id: str | None) -> dict:
+    def store_selected_campaign(self,campaign: dict, company_id: int) -> dict:
 
         result = supabase.table("campaigns").insert({
             "title":            campaign.get("title"),
@@ -26,6 +21,9 @@ class SelectedCampaignsService:
             "end_date":         campaign.get("end_date"),
             "company_id":       company_id,
         }).execute()
-        print(result)
-        print(result.data)
+        #print(result)
+        #print(result.data)
         return result.data[0]
+        
+    def update_selected_campaigns(self, ngo_id: str):
+        pass

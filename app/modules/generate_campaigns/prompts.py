@@ -88,7 +88,8 @@ OUTPUT FORMAT
       "title": "string",
 
       "description": "clear explanation of how the campaign will be executed in {location}",
-
+      "category": "{category}",   
+      "location": "{location}",
       "estimated_budget": {budget},
 
       "budgetBreakdown": {{

@@ -5,10 +5,9 @@ from app.shared.clients.supabase_client import supabase
 scs = SelectedCampaignsService()
 
 def test_store_selected_campaign_inserts_data():
-    # 🔹 unique company id (so test data is isolated)
+
     company_id = 1
 
-    # 🔹 sample campaign matching your function
     campaign = {
         "title": "TEST_CAMPAIGN",
         "description": "Testing DB insert",
@@ -32,15 +31,15 @@ def test_store_selected_campaign_inserts_data():
         "end_date": "2026-03-01",
     }
 
-    # 🔹 call function
+    #call function
     inserted = scs.store_selected_campaign(campaign, company_id)
 
-    # 🔹 basic checks
+    #basic checks
     assert inserted is not None
     assert inserted["title"] == "TEST_CAMPAIGN"
     assert inserted["company_id"] == company_id
 
-    # 🔹 fetch from DB (real verification)
+    # fetch from DB (real verification)
     db_response = supabase.table("campaigns") \
         .select("*") \
         .eq("id", inserted["id"]) \
@@ -50,15 +49,15 @@ def test_store_selected_campaign_inserts_data():
 
     row = db_response.data[0]
 
-    # 🔹 field-level checks
+    # field-level checks
     assert row["title"] == campaign["title"]
     assert row["category"] == campaign["category"]
     assert row["location"] == campaign["location"]
     assert row["budget_inr"] == campaign["estimated_budget"]
     assert row["company_id"] == company_id
 
-    # 🔹 cleanup (important)
-    #supabase.table("campaigns") \
-    #    .delete() \
-    #    .eq("id", inserted["id"]) \
-    #    .execute()
+    # cleanup (important)
+    supabase.table("campaigns") \
+        .delete() \
+        .eq("id", inserted["id"]) \
+        .execute()
