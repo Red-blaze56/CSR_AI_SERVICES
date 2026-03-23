@@ -291,16 +291,19 @@ def _save_to_db(ngo_id: int, structured: dict) -> int:
     request_id = response.data[0]["id"]
 
     # Stored in campaign_embeddings with source tag until dedicated table is created
+    # location and estimated_budget included for pre-filtering before vector search
     supabase.table("campaign_embeddings").insert({
         "campaign_id": None,
         "embedding":   embedding,
         "metadata": {
-            "source":       "ngo_request",
-            "request_id":   request_id,
-            "title":        structured.get("title"),
-            "category":     structured.get("category"),
-            "location":     structured.get("location"),
-            "request_type": structured.get("request_type"),
+            "source":           "ngo_request",
+            "request_id":       request_id,
+            "title":            structured.get("title"),
+            "category":         structured.get("category"),
+            "location":         structured.get("location"),
+            "request_type":     structured.get("request_type"),
+            "estimated_budget": structured.get("estimated_budget"),
+            "budget_currency":  structured.get("budget_currency", "INR"),
         },
         "version": 1,
     }).execute()
